@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Streaming</title>  
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 20px;
+            
+            /* display: grid;
+            grid-auto-flow: column; /* Makes elements align in a row */
+            /* gap: 20px;
+            align-items: center; */ 
+        }
+        .filter-form {
+            margin-bottom: 20px;
+        }
+        .audio-container {
+            margin: 20px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            width: 30%;
+            border-radius: 15px;
+            max-width: 500px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+            display: grid;
+            font-style: italic;
+         
+            
+            /* Makes elements align in a row */
+           
+           
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+            outline: none;
+        }
+        .artist-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .cover-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 10px; /* Rounded corners */
+    object-fit: cover; /* Ensures the image fills the box without distortion */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a slight shadow for depth */
+    transition: transform 0.2s ease-in-out; /* Smooth animation effect */
+}
+
+.cover-image:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TuneTrack</h1>
+
+        <!-- Artist Filter Form -->
+        <form method="GET" class="filter-form">
+            <label for="topsongs">Filter by Albums:</label>
+            <select name="topsongs" id="topsong" onchange="this.form.submit()">
+                <option value="">All Songs</option>
+                {% for topsong in topsongs %}
+                    <option value="{{ topsong.id }}" {% if topsong.id|stringformat:"s" == selected_topsong %}selected{% endif %}>
+                        {{ topsong.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <!-- Display Songs -->
+        {% for tune in tunes %}
+            <div class="audio-container">
+                {% if tune.cover_image %}
+                    <img class="cover-image" src="{{ tune.cover_image.url }}" alt="{{ tune.title }} Cover" > 
+             
+
+                
+
+
+
+                {% endif %}
+                <h2 style="color:forestgreen; font-family: Arial, sans-serif; margin-bottom: 10px;">
+                {{ tune.title }} - {{ tune.topsong.name }}</h2>
+                <p style="font-size: 14px; color: #666;">Genre: {{ tune.genre|default:"Unknown" }}</p>
+                <p  style="font-size: 14px; color: #666;">Duration: {% if tune.duration %}{{ tune.duration }} sec{% else %}N/A{% endif %}</p>
+                <audio controls>
+                    <source src="{{ tune.audio_url.url }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html> 

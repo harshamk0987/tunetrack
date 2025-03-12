@@ -1,0 +1,423 @@
+{% load static %} 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Streaming Service</title>
+   
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css'  %}" />
+</head>
+<body style="margin:0; padding:0; background:#121212; font-family:Arial, sans-serif; color:#fff;">
+    <div class="sidebar">
+        <!-- Spotify Logo -->
+        <div class="logo-container">
+            <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png" alt="Spotify Logo" style="width: 100%; height: auto; padding: 20px; box-sizing: border-box;">
+        </div>
+
+        <!-- Welcome User -->
+        <div class="sidebar-section">
+            <span style="margin-left: 14px;" class="sidebar-link-icon">👤</span>
+            <b>Welcome, {{user.username}}</b>
+            <br>
+            <br>
+
+
+            <a href="/logout">
+                <span class="sidebar-link-icon">↪️</span>
+                <b>Logout</b> 
+            </a>
+        </div>
+
+            <!-- <a href="logout/">
+                <span class="sidebar-link-icon">↪️</span>
+                <b>Logout</b>
+            </a>
+        </div> -->
+
+        <!-- Top section of the sidebar -->
+        <div class="sidebar-section">
+            <a href="#" class="sidebar-link active">
+                <span class="sidebar-link-icon">🏠</span>
+                Home
+            </a>
+            <a href="/search" class="sidebar-link">
+                <span class="sidebar-link-icon">🔍</span>
+                Search
+            </a>
+            <a href="#" class="sidebar-link">
+                <span class="sidebar-link-icon">🎵</span>
+                Your Library
+            </a>
+        </div>
+
+        <!-- Bottom section of the sidebar -->
+        <div class="sidebar-section">
+            <a href="#" class="sidebar-link active">
+                <span class="sidebar-link-icon">💜</span>
+                <span class="sidebar-link-text">wishlist</span>
+            </a>
+            <!-- Repeat for each item -->
+            <!-- <a href="#" class="sidebar-link">
+                <span class="sidebar-link-icon">🎶</span>
+                <span class="sidebar-link-text">African Lofi Experience</span>
+            </a> -->
+            <a href="#" class="sidebar-link">
+                <span class="sidebar-link-icon">👤</span>
+                <span class="sidebar-link-text">Ayra Starr</span>
+            </a>
+            <!-- ... more links ... -->
+        </div>
+    </div>
+
+    <div style="margin-left:240px; padding:20px;">
+        <header class="header-container">
+            <div class="search-bar" style="width: 390px;">
+                <input type="search" placeholder="What do you want to listen to?" aria-label="Search">
+                <button type="submit" aria-label="Search">
+                    🔍
+                </button>
+            </div>
+            <div class="search-title">Top Artists</div>
+        </header>
+
+
+        <main style="padding-top:20px;">
+            <section style=" margin-top:0px; padding:0px; overflow-x:auto; white-space:nowrap;">
+
+                <!-- Artist Card -->
+                 
+                <div class="artist-card">
+                   
+                    <a href="#" style="text-decoration: none;">
+                        <a href="{% url 'music_player' %}">
+                        <img src="{% static 'images/arrahman.jpg' %}" alt="ar" style="width:150px; height:150px; border-radius:50%;"></a>
+                        <div class="artist-info">
+                           <div class="artist-name">Ar Rahman</div>
+                           <div class="artist-title">Artist</div>
+                    
+                        </div>
+                   </a>
+                </div>
+
+
+
+
+                <div class="artist-card">
+                    <a href="#" style="text-decoration: none;">
+                        <a href="{% url 'music_player' %}">
+                    <img src="{% static  'images/arjit.jpg'   %}" alt="Arjith" style="width:150px; height:150px; border-radius:50%;"></a>
+                    <div class="artist-info">
+                        <div class="artist-name">Arjith Sing</div>
+                        <div class="artist-title">Artist</div>
+                    </div>
+                    </a>
+                </div>
+
+
+
+
+                <div class="artist-card">
+                    <a href="#" style="text-decoration: none;">
+                        <a href="{% url 'music_player' %}">
+                        <img src="{% static 'images/atif.jpg'   %}" alt="Rema" style="width:150px; height:150px; border-radius:50%;"></a>
+                        <div class="artist-info">
+                           <div class="artist-name">Atif Aslam</div>
+                           <div class="artist-title">Artist</div>
+                    
+                        </div>
+                   </a>
+                </div>
+                 
+
+
+                
+
+                
+                <div class="artist-card">
+                    <a href="#" style="text-decoration: none;">
+                        <a href="{% url 'music_player' %}">
+                    <img src="{% static 'images/sreya.jpg' %}" alt="sreya" style="width:150px; height:150px; border-radius:50%;"></a>
+                    <div class="artist-info">
+                        <div class="artist-name">Sreya Goshal</div>
+                        <div class="artist-title">Artist</div>
+                    </div>
+                    </a>
+                </div>
+
+
+                <div class="artist-card">
+                    <a href="#" style="text-decoration: none;">
+                        <a href="{% url 'music_player' %}">
+                    <img src="{% static 'images/arman.jpg' %}" alt="Arman" style="width:150px; height:150px; border-radius:50%;"></a>
+                    <div class="artist-info">
+                        <div class="artist-name">Arman Malik</div>
+                        <div class="artist-title">Artist</div>
+                    </div>
+                    </a>
+                </div>
+
+
+                <!-- <div class="artist-card">
+                    <a href="#" style="text-decoration: none;">
+                    <img src="{% static  'images/neha.jpg'   %}" alt="Arjith" style="width:150px; height:150px; border-radius:50%;">
+                    <div class="artist-info">
+                        <div class="artist-name">Neha kakkar </div>
+                        <div class="artist-title">Artist</div>
+                    </div>
+                    </a>
+                </div> -->
+
+
+                <div class="artist-card">
+                    <a href="#" style="text-decoration: none;">
+                        <a href="{% url 'music_player' %}">
+                    <img src="{% static 'images/vineeth.jpg' %}" alt="Rema" style="width:150px; height:150px; border-radius:50%;"></a>
+                    <div class="artist-info">
+                        <div class="artist-name">Vineeth Sreenivasan</div>
+                        <div class="artist-title">Artist</div>
+                    </div>
+                    </a>
+                </div>
+
+
+                <div class="artist-card">
+                    <!-- <a href="#" style="text-decoration: none;"> -->
+                        <!-- <button onclick="playMusic()">▶ Play</button>
+                        <audio id="audioPlayer" src="{{ artist.music_player.url }}"></audio> -->
+
+
+
+                        
+                        <!-- <a href="{% url 'music_player' %}"> -->
+                    <img src="{% static 'images/anirudh.jpg' %} "alt="Anirudh" style="width:150px; height:150px; border-radius:50%;"></a>
+                    <div class="artist-info">
+                        <div class="artist-name">Anirudh</div>
+                        <div class="artist-title">Artist</div>
+
+
+
+                        
+        <!-- <script>
+            function playMusic() {
+            var audio = document.getElementById("audioPlayer");
+           if (audio.paused) {
+        audio.play();
+         } else {
+        audio.pause();
+    }
+}
+</script> -->
+
+
+
+
+                    </div>
+                    </a>
+                </div>
+              
+                
+                <!-- Add more content cards here -->
+            </section>
+
+
+            <!-- <button onclick="playMusic()">▶ Play</button>
+       <audio id="audioPlayer" src="{{ artist.sample_song.url }}"></audio>
+
+        <script>
+            function playMusic() {
+            var audio = document.getElementById("audioPlayer");
+           if (audio.paused) {
+        audio.play();
+         } else {
+        audio.pause();
+    }
+}
+</script> -->
+
+
+
+
+
+
+            <!-- Repeat sections for other categories with more content cards -->
+          
+          <!-- "Browse All" Section Title -->
+          <div class="browse-all-title">Top songs</div>
+
+          <!-- "Browse All" Section Content -->
+          
+
+          <div class="browse-all">
+            <!-- Category Card -->
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+                    <a href="{% url 'tune_album' %}">
+                <img src="{% static 'images/thamil Malayalm.jpg' %}" alt="Podcasts"></a><br>
+                <div class="category-title">Thamil x Malayalam</div></a>
+            </div>
+
+
+            <!-- <div class="category-card">
+                <a href="{% url 'music_player' %}">
+           
+
+              <img src=" https://i.scdn.co/image/ab67fb8200005cafa6152f62518b4c3251858b21" alt="Audiobooks"></a>
+              <div class="category-title">Audiobooks
+            </div>
+            </div>
+            -->
+            <div class="category-card">
+            
+            <a href="#" style="text-decoration: none;">
+      
+            <a href="{% url 'tune_album' %}">
+            <img src="{% static 'images/allss.jpeg' %}" alt="Malayalam song"></a>
+            <div class="category-title">Feel good</div>
+        </a></div>
+
+
+
+            <div class="category-card">
+
+            <a href="{% url 'tune_album' %}">
+            <img src="{% static 'images/malayala.jpg' %}" alt="live Events"></a><br><br>
+   
+            <div class="category-title">Jukebox</div>
+            </div>
+          
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                <a href="{% url 'tune_album' %}">
+              <img src="{% static 'images/thamil best.jpeg' %}" alt="Podcasts"></a>
+              <div class="category-title">Thamil Best</div>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                    <a href="{% url 'tune_album' %}">
+              <img src="{% static 'images/bol.jpg' %}" alt="Podcasts"></a>
+              <div class="category-title">Bollywood</div></a>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                    <a href="{% url 'tune_album' %}">
+              <img src="https://i.scdn.co/image/ab67fb8200005caf585ad0e83caae5047865f7a4" alt="Podcasts"></a>
+              <div class="category-title">2023 in music</div></a>
+            </div>
+            <!-- Repeat for each category -->
+             <!-- other categories  -->
+        </div>
+
+        <div class="browse-all">
+            <!-- Category Card -->
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                    <a href="{% url 'tune_album' %}">
+                <img src="{% static 'images/new music.jpg' %}" alt="Podcasts"></a>
+                <div class="category-title">Trending</div></a>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                    <a href="{% url 'tune_album' %}">
+              <img src="{% static 'images/hello.jpg' %}" alt="Podcasts"></a>
+              <br>
+              <br>
+              <div class="category-title">Hits</div></a>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                <a href="{% url 'tune_album' %}">
+              <img src="{% static 'images/allss.jpeg' %}" alt="Podcasts"></a>
+              <div class="category-title">Mixed</div></a>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                <a href="{% url 'tune_album' %}">
+              <img src="https://i.scdn.co/image/ab67fb8200005cafa862ab80dd85682b37c4e768" alt="Podcasts"></a>
+              <div class="category-title">Pop</div></a>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                    <a href="{% url 'tune_album' %}">
+              <img src="https://i.scdn.co/image/ab67fb8200005caf271f9d895003c5f5561c1354" alt="Podcasts"></a>
+              <div class="category-title">Mood</div></a>
+            </div>
+
+            <div class="category-card">
+                <a href="#" style="text-decoration: none;">
+      
+                    <a href="{% url 'tune_album' %}">
+              <img src="https://i.scdn.co/image/ab67fb8200005caf9e3dea60be755ccd97b7351f" alt="Podcasts"></a>
+              <div class="category-title">Hip-Hop</div></a>
+            </div>
+            <!-- Repeat for each category -->
+            <!-- ... other categories ... -->
+        </div>
+
+        <!-- <div class="browse-all"> -->
+            <!-- Category Card -->
+            <!-- <div class="category-card">
+                <img src="https://t.scdn.co/images/7262179db37c498480ef06bfacb60310.jpeg" alt="Podcasts">
+                <div class="category-title">Podcast Charts</div>
+            </div>
+
+            <div class="category-card">
+              <img src="https://t.scdn.co/images/209c867f5bb34076b0dcc9deeb1868e6" alt="Podcasts">
+              <div class="category-title">Podcast New Releases</div>
+            </div>
+
+            <div class="category-card">
+              <img src="https://i.scdn.co/image/9af79fd06e34dea3cd27c4e1cd6ec7343ce20af4" alt="Podcasts">
+              <div class="category-title">Video Podcasts</div>
+            </div>
+
+            <div class="category-card">
+              <img src="https://i.scdn.co/image/ab67fb8200005caf3a75eafe6ba383e4152e6938" alt="Podcasts">
+              <div class="category-title">Fiction & Literature</div>
+            </div> -->
+
+            <!-- <div class="category-card">
+              <img src="https://charts-images.scdn.co/assets/locale_en/regional/weekly/region_global_default.jpg" alt="Podcasts">
+              <div class="category-title">Charts</div>
+            </div>
+
+            <div class="category-card">
+              <img src="https://i.scdn.co/image/ab67706f000000029249b35f23fb596b6f006a15" alt="Podcasts">
+              <div class="category-title">Workout</div>
+            </div> -->
+
+
+
+
+            <!-- Repeat for each category -->
+            <!-- ... other categories ... -->
+        </div>
+        
+        <!-- <div class="category-card">
+
+            <a href="{% url 'music_player' %}"><img src="https://concerts.spotifycdn.com/images/live-events_category-image.jpg" alt="live Events"></a>
+            <div class="category-title">Live Events</div> -->
+           
+
+        </main>
+
+    </div>
+    
+</body>
+</html>
