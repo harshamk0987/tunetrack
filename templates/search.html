@@ -10,12 +10,12 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.4/dist/tailwind.min.css" rel="stylesheet">
   <style>
 
-    .artist-header {
+    /* .artist-header {
       background-image: url('https://cdn.punchng.com/wp-content/uploads/2023/05/20120536/Rema.jpeg');
       background-size: cover;
       background-position: center;
       height: 60vh;
-    }
+    } */
 
   </style>
 </head>
@@ -29,13 +29,14 @@
     </div>
     <!--welcome user-->
     <div class="sidebar-section">
-      <span style="margin-left: 14px;" class=""sidebar-link-icon></span>
+      <span style="margin-left: 14px;" class=""sidebar-link-icon>👤</span>
       <b>Welcome, {{user.username}}</b>
       <br>
       <br>
       
       <a href="/logout">
         <span class="sidebar-link-icon">↪️</span>
+        <b>Logout</b>
 
       </a>
     </div>
@@ -44,34 +45,28 @@
 
    <!---Top section of the sidebar -->
     <div class="sidebar-section">
-        <a href="#" class="sidebar-link active">
+        <a href="/home" class="sidebar-link ">
             <span class="sidebar-link-icon">🏠</span>
-            Home
+          <b> Home </b>
         </a>
-        <a href="#" class="sidebar-link">
+        <a href="#" class="sidebar-link active" >
             <span class="sidebar-link-icon">🔍</span>
             Search
         </a>
         <a href="#" class="sidebar-link">
             <span class="sidebar-link-icon">🎵</span>
-            Your Library
+           <b>Your Library</b>
         </a>
     </div>
 
     <!-- Bottom section of the sidebar -->
     <div class="sidebar-section">
-        <a href="#" class="sidebar-link active">
+        <a href="/wishlist" class="sidebar-link ">
             <span class="sidebar-link-icon">💜</span>
-            <span class="sidebar-link-text">Liked Songs</span>
+            <span class="sidebar-link-text"></span>
+            <b>Wishlist</b>
         </a>
-        <!-- Repeat for each item -->
-        <a href="#" class="sidebar-link">
-            <span class="sidebar-link-icon">🎶</span>
-            <span class="sidebar-link-text">African Lofi Experience</span>
-        </a>
-        <a href="#" class="sidebar-link">
-            <span class="sidebar-link-icon">🎹</span>
-            <span class="sidebar-link-text">Ayra Starr</span>
+        
         </a>
         <!-- ... more links ... -->
     </div>
@@ -81,27 +76,127 @@
 
 
   <!-- Main Content -->
-  <div class="flex-1">
+  <!-- <div class="flex-1">
       
     <br>
     <br>
     <header class="header-container">
       <div class="search-bar" style="width: 390px;">
-          <input type="search" placeholder="What do you want to listen to?" aria-label="Search">
+          <input type="search" placeholder="What do you want to listen?" aria-label="Search">
           <button type="submit" aria-label="Search">
-              🔍
-          </button>
-      </div>
-    </header>
+              🔍 -->
+          <!-- </button>
+         
     
-    <!-- Popular Tracks Section -->
-    <div class="p-5">
+        {% if results %}
+            <h2>Results:</h2>
+            <ul>
+                {% for song in results %}
+                    <li>{{ song.title }} by {{ song.artist }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </body>
+    </html>
+    
+    
+      </div> 
+    </header> -->
+
+
+
+    <div class="flex-1">
+      <br><br>
+      
+      <header class="header-container">
+          <div class="search-bar" style="width: 300px;">
+              <form method="GET" action="{% url 'search_songs' %}">
+                  <input 
+                      type="search" 
+                      name="query"
+                      placeholder="What do you want to listen to?" 
+                      aria-label="Search"
+                      style="width: 100%; padding: 8px; border-radius: 20px; border: 1px solid #ccc;"
+                  >
+                  <button 
+                      type="submit" 
+                      aria-label="Search"
+                      style="padding: 8px 15px;  color: #fff; border: none; border-radius: 20px; cursor: pointer;" 
+                  >
+                      🔍
+                  </button>
+              </form>
+  
+              
+          </div>
+          <div>
+            {% if results %}
+                  <h2>Results:</h2>
+                  <ul style="list-style-type: none; padding: 0;">
+                      {% for song in results %}
+                          <li style="padding: 2px 0;">
+                              🎵 <strong>{{ song.title }}</strong> by {{ song.artist }}
+                          </li>
+                      {% endfor %}
+                  </ul>
+              {% else %}
+                  <!-- <p>No results found.</p> -->
+              {% endif %}
+          </div>
+      </header>
+  </div>
+  
+
+
+    
+    <!-- <title>Song Search</title> -->
+
+
+    <!-- <h1>Search for Songs</h1> -->
+
+    
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    <!-- <div class="p-5">
       <br>
       <h2 class="text-2xl font-bold mb-4">Search Results</h2>
-      <div class="divide-y divide-gray-800">
-        <!-- Single Track Row -->
-         <!-- {% for track in track_list %} -->
-        <div class="flex justify-between items-center py-3">
+      <div class="divide-y divide-gray-800"> --> 
+
+
+
+         <!-- <form method="GET" action="{% url 'search_songs' %}">
+          <input type="text" name="q" placeholder="Search for a song..." required>
+          <button type="submit">Search</button>
+      </form> 
+        Single Track Row 
+          {% for track in track_list %}  -->
+        <!-- <div class="flex justify-between items-center py-3">
           <div class="flex items-center space-x-4">
             <img src="https://i.scdn.co/image/ab67616d00001e02963265801aa5c9740ad159b7" alt="Song Image" class="w-12 h-12">
             <div>
@@ -109,12 +204,12 @@
               <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
             </div>
           </div>
-          <div class="text-gray-400">1,182,474,314</div>
-          <div class="text-gray-400">3:59</div>
+          <div class="text-gray-400">1,182,474,314</div> --> -->
+          <!-- <div class="text-gray-400">3:59</div>
         </div>
         <!-- Repeat for other tracks -->
       </div>
-      <!-- <a href="#" class="text-green-500 text-sm">See more</a> -->
+      <a href="#" class="text-green-500 text-sm">See more</a>
     </div>
     {% endfor %}
     

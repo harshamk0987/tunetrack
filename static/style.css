@@ -75,6 +75,7 @@ section {
     left: 10px;
     color: white;
     font-size: 16px;
+  
 }
 
 /* Scrollbar Styles */
@@ -226,6 +227,8 @@ object-fit: cover;
 margin-bottom: 8px;
 }
 
+
+
 .artist-card .artist-name {
 font-size: 18px;
 color: #fff;
@@ -236,6 +239,10 @@ margin-top: 8px;
 font-size: 13px;
 color: #b3b3b3;
 }
+.artist-card:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
 
 .close-btn {
 position: absolute;

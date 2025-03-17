@@ -1,18 +1,19 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Streaming</title>  
-    <style>
+    <title>Music Streaming</title>   -->
+    <!-- <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background: #121212;
             font-family: Arial, sans-serif;
             color: #fff;
-            text-align: center;
+            /* text-align: center;
+        } */
         }
         .container {
             width: 80%;
@@ -27,37 +28,45 @@
         .filter-form {
             margin-bottom: 20px;
         }
+
         .audio-container {
-            margin: 20px auto;
-            padding: 20px;
-            background: #1e1e1e;
-            width: 30%;
-            border-radius: 15px;
-            max-width: 500px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
-            display: grid;
-            font-style: italic;
-         
-            
-            /* Makes elements align in a row */
+            background-color: #181818;
+            border: 1px solid #282828;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+      
            
-           
-        }
+    .audio-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+    }
 
 
-    /* .audio-container {
-    margin: 20px auto;
-    padding: 20px;
-    background: #1e1e1e;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-} */
+
+    h2 {
+    color: #1DB954; /* Spotify green */
+    font-size: 18px;
+    margin: 0;
+}
+
+p {
+    color: #B3B3B3;
+    font-size: 14px;
+    margin: 2px 0;
+}
+
+
+
+
+
+   
 
 
 
@@ -66,7 +75,7 @@
 
         audio {
             width: 100%;
-            margin-top: 10px;
+            /* margin-top: 10px; */
             outline: none;
         }
         .artist-image {
@@ -76,13 +85,13 @@
             object-fit: cover;
             margin-right: 10px;
         }
-        .cover-image {
-    width: 300px;
-    height: 300px;
-    border-radius: 10px; /* Rounded corners */
-    object-fit: cover; /* Ensures the image fills the box without distortion */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a slight shadow for depth */
-    transition: transform 0.2s ease-in-out; /* Smooth animation effect */
+    .cover-image {
+       width: 200px;
+       height: 200px;
+       border-radius: 18px; /* Rounded corners */
+       object-fit: cover; /* Ensures the image fills the box without distortion */
+       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a slight shadow for depth */
+       transition: transform 0.2s ease-in-out; /* Smooth animation effect */
 }
 
 .cover-image:hover {
@@ -97,58 +106,177 @@
     <div class="container">
         <h1>TuneTrack</h1>
 
-        <!-- Artist Filter Form -->
-        <form method="GET" class="filter-form">
-            <label for="artist">Filter by Artist:</label>
-            <select name="artist" id="artist" onchange="this.form.submit()">
-                <option value="">All Artists</option>
-                {% for artist in artists %}
-                    <option value="{{ artist.id }}"{% if artist.id|stringformat:"s" == selected_artist %}selected{% endif %}>
-                        {{ artist.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </form>
+      
 
-
-       
-
-
-
-
-
-
-
-
-
-
-        <!-- Display Songs -->
+    <div class="songs-container">
+   
          {% for song in songs %}
             <div class="audio-container">
                 {% if song.cover_image %}
                     <img class="cover-image" src="{{ song.cover_image.url }}" alt="{{ song.title }} Cover" >
-                     <!-- style="width:150px; height:150px; box-sizing: border-box;" 
 
-                  -->
+                    <form method="post" action="{% url 'add_to_wishlist' song.id}" >
+                      
+                        <button type="submit">Add to wishlist</button>
+                    </form>
+            </div>
+    </div>
+                    
 
 
 
                  {% endif %}
-                <h2 style="color:forestgreen; font-family: Arial, sans-serif; margin-bottom: 10px;">
-                {{ song.title }} - {{ song.artist.name }}</h2>
-                <p style="font-size: 14px; color: #666;">Genre: {{ song.genre|default:"Unknown" }}</p>
-                <p  style="font-size: 14px; color: #666;">Duration: {% if song.duration %}{{ song.duration }} sec{% else %}N/A{% endif %}</p>
+                 <div class="song-details">
+                <!-- <h2 style="color:forestgreen; font-family: Arial, sans-serif; margin-bottom: 10px;"> -->
+               <!-- <h2> {{ song.title }} - {{ song.artist.name }}</h2>
+                <p>Genre: {{ song.genre|default:"Unknown" }}</p>
+                <p>Duration: {% if song.duration %}{{ song.duration }} sec{% else %}N/A{% endif %}</p>
                 <audio controls>
                     <source src="{{ song.audio_url.url }}" type="audio/mp3">
                     Your browser does not support the audio element.
                 </audio>
             </div>
-        {% endfor %}
     </div>
+        {% endfor %}
+    </div> -->
 
 
-
+<!-- 
     
 
 </body>
-</html> 
+</html>  --> 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuneTrack</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #121212;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 20px;
+        }
+        .songs-container {
+            display: grid;
+            grid-gap: 20px;
+        }
+        .audio-container {
+            background-color: #181818;
+            border: 1px solid #282828;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .audio-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+        }
+        h1 {
+            color: #1DB954;
+            text-align: center;
+        }
+        h2 {
+            color: #1DB954;
+            font-size: 18px;
+            margin: 0;
+        }
+        p {
+            color: #B3B3B3;
+            font-size: 14px;
+            margin: 2px 0;
+        }
+        .cover-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 18px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .cover-image:hover {
+            transform: scale(1.05);
+        }
+        .song-details {
+            flex-grow: 1;
+        }
+        form button {
+            background-color: #1DB954;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 15px;
+            color: #121212;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        form button:hover {
+            background-color: #1ed760;
+        }
+
+        .song-details {
+            flex-grow: 1;
+        }
+        form button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #1DB954;
+            transition: color 0.3s ease;
+        }
+      
+        
+        .heart-button::before {
+            content: '\2665'; /* Unicode heart shape */
+            color: #1DB954;
+        }
+        .heart-button:hover::before {
+            color: #1ed760;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TuneTrack</h1>
+        <div class="songs-container">
+            {% for song in songs %}
+            <div class="audio-container">
+                {% if song.cover_image %}
+                    <img class="cover-image" src="{{ song.cover_image.url }}" alt="{{ song.title }} Cover">
+                {% endif %}
+                <div class="song-details">
+                    <h2>{{ song.title }} - {{ song.artist.name }}</h2>
+                    <p>Genre: {{ song.genre|default:"Unknown" }}</p>
+                    <p>Duration: {% if song.duration %}{{ song.duration }} sec{% else %}N/A{% endif %}</p>
+                    <audio controls>
+                        <source src="{{ song.audio_url.url }}" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <form method="post" action="{% url 'add_to_wishlist' song.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="heart-button"></button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

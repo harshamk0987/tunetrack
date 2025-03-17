@@ -1,0 +1,16 @@
+
+            <!-- <div class="category-card">
+                <a href="{% url 'music_player' %}">
+           
+
+              <img src=" https://i.scdn.co/image/ab67fb8200005cafa6152f62518b4c3251858b21" alt="Audiobooks"></a>
+              <div class="category-title">Audiobooks
+            </div>
+            </div>
+            -->
+
+
+            <!-- <div class="category-card">
+
+            <a href="{% url 'music_player' %}"><img src="https://concerts.spotifycdn.com/images/live-events_category-image.jpg" alt="live Events"></a>
+            <div class="category-title">Live Events</div> -->

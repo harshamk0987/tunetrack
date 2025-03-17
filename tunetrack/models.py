@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+ # Assuming this is your model
 
 
 
@@ -30,6 +31,8 @@ class Song(models.Model):
         return self.title
     
 
+    
+
 
 
 
@@ -58,45 +61,24 @@ class Tune(models.Model):
     
 
 
-
-# class Song(models.Model):
-#     title = models.CharField(max_length=255)
-#     artist = models.CharField(max_length=255)  # Ensure this field exists
-#     album = models.CharField(max_length=255, blank=True, null=True)
-
-# class Song(models.Model):
-#     title = models.CharField(max_length=255)
-#     artist = models.CharField(max_length=255)
-#     genre = models.CharField(max_length=100, blank=True, null=True)
- 
-#     audio_url = models.FileField(upload_to='audio/')
-#     duration = models.IntegerField(null=True, blank=True)
-
-#     cover_image = models.ImageField(upload_to="cover_images/", blank=True, null=True)  # Store Spotify track link
-
-#     def __str__(self):
-#         return f"{self.title} - {self.artist}"
-
-# class Wishlist(models.Model):
-#     artist = models.ForeignKey(User, on_delete=models.CASCADE)
-#     song = models.ForeignKey(Song, on_delete=models.CASCADE)
-#     added_at = models.DateTimeField(auto_now_add=True)
-
-#     class Meta:
-#         unique_together = ('user', 'song')  # Prevent duplicate wishlist items
-
-#     def __str__(self):
-#         return f"{self.user.username} - {self.song.title}"
-
-
-
    
+
+# whislist
+
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'song')  # Prevent duplicate entries
+
+    def __str__(self):
+        return f"{self.user.username} - {self.song.title}"
     
-   
-
-
-        
 
 
 
-# Create your models here.
+
+
+

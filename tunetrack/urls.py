@@ -4,26 +4,30 @@ from .import views
 # from .views import upload_song, song_list
  
 urlpatterns = [
+    path('home/', views.home, name='home'),
     path('',views.index, name='index'),
     path('login/',views.login , name='login'),
     path('signup/',views.signup , name='signup'),
     path('logout',views.logout ,name='logout'),
-    path('music/<str:pk>/', views.music, name='music'),
-    # path('profile/<str:pk>/', views.profile, name='profile'),
-    path('search/', views.search, name='search'),
-    path('player/',views.music_player,name='music_player'), 
-    path('album/',views.tune_album, name='tune_album'),
-
-
-
-
-
-
+    # path('music/<str:pk>/', views.music, name='music'),
+    # path('profile/', views.profile, name='profile'),
+    path('search/', views.search_songs, name='search_songs'),
+    path('player/<int:artist_id>/',views.music_player,name='music_player'), 
+    path('album/<int:topsong_id>/', views.tune_album, name='tune_album'),
+    path('wishlist/', views.wishlist_view, name='wishlist'),
+    path('wishlist/add/<int:artist_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('wishlist/remove/<int:item_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+   
 ]
 
 
+
+
+
+
+
+
+
+
    
-    # path('artistsong',views.artist_song,name='artist_song')
-    #  path("upload/", upload_song, name="upload_song"),
-    # path("songs/", song_list, name="song_list"),
-    
+   

@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 # from .models import Artist
 from django.http import HttpResponse
 from django.contrib import messages
@@ -10,25 +11,23 @@ from bs4 import BeautifulSoup as bs
 import re
 from .models import Song,Artist
 from .models import Tune,Topsong
+from .forms import SongSearchForm
+from .models import Wishlist
 
-# from .views import tune_album
-# def tune_album(request):
-#     return HttpResponse("This is the Tune Album view")
+
+
+
 
 from django.conf import settings
 
 
 
 
-# def top_artists():
-#     url = "https://spotify-scraper.p.rapidapi.com/v1/chart/artists/top"
+def home(request):
+    return render(request, 'index.html')
 
-#     headers = {
-#         "X-RapidAPI-Key": "02912db996msh068b089c778126bp13a9d9jsn380afeb7d573",
-#         "X-RapidAPI-Host": "spotify-scraper.p.rapidapi.com"
-#     }
 
-#     response =requests.get(url,headers=headers)
+
 
 
 def top_artists():
@@ -36,10 +35,8 @@ def top_artists():
 
 
 
-#     headers = {
-# 	    "x-rapidapi-key": "91a51b85fbmshafa1c02062b63ebp1e23ecjsn46985782d383",
-#         "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
-# }
+
+
     headers = {
 	    "x-rapidapi-key": "91a51b85fbmshafa1c02062b63ebp1e23ecjsn46985782d383",
 	    "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
@@ -190,123 +187,113 @@ def music(request, pk):
 @login_required(login_url='login')
 def index(request):
     songs = Song.objects.all()
-    return render(request, 'templates/index.html',{'songs':songs})
+    artist_id = request.GET.get('artist', '')
+    # track_id = 4
+    return render(request, 'templates/index.html',{'songs':songs,'artist_id': artist_id})
 
-    # artists_info =top_artists()
-    # top_track_list = top_tracks()
-   
-    # context = {
-    #     'artist_info':artists_info,
     
-    return render(request,'index.html')
+    
+    # return render(request,'index.html')
 
 
 #search
 
-def search(request):
-    if request.method == 'POST':
-        search_query = request.POST['search_query']
 
-        url = "https://spotify-scraper.p.rapidapi.com/v1/search"
 
-        querystring = {"term":search_query,"type":"track"}
 
-        headers = {
-            "X-RapidAPI-Key": "02912db996msh068b089c778126bp13a9d9jsn380afeb7d573",
-            "X-RapidAPI-Host": "spotify-scraper.p.rapidapi.com"
-        }
 
-        response = requests.get(url, headers=headers, params=querystring)
+# def search_songs(request):
+#     form = SongSearchForm(request.GET)
+#     results = []
 
-        track_list = []
+#     if form.is_valid():
+#         query = form.cleaned_data['query']
+#         results = Song.objects.filter(
+#             title__icontains=query
+#         ) | Song.objects.filter(
+#             artist__icontains=query
+#         ) | Song.objects.filter(
+#             album__icontains=query
+#         )
 
-        if response.status_code == 200:
-            data = response.json()
+#     return render(request, 'search.html', {'form': form, 'results': results})
+def search_songs(request):
+    form = SongSearchForm(request.GET)
+    results = []
 
-            search_results_count = data["tracks"]["totalCount"]
-            tracks = data["tracks"]["items"]
+    if form.is_valid():
+        query = form.cleaned_data['query']
 
-            for track in tracks:
-                track_name = track["name"]
-                artist_name = track["artists"][0]["name"]
-                duration = track["durationText"]
-                trackid = track["id"]
+        results = Song.objects.filter(
+            title__icontains=query
+        ) | Song.objects.filter(
+            artist__name__icontains=query  # Correct lookup for ForeignKey
+        )
 
-                if get_track_image(trackid, track_name):
-                    track_image = get_track_image(trackid, track_name)
-                else:
-                    track_image = "https://imgv3.fotor.com/images/blog-richtext-image/music-of-the-spheres-album-cover.jpg"
 
-                track_list.append({
-                    'track_name': track_name,
-                    'artist_name': artist_name,
-                    'duration': duration,
-                    'trackid': trackid,
-                    'track_image': track_image,
-                })
-        context = {
-            'search_results_count': search_results_count,
-            'track_list': track_list,
-        }
+    return render(request, 'search.html', {'form': form, 'results': results})
 
-        return render(request, 'search.html', context)
-    else:
-        return render(request, 'search.html')
+
+# def search_songs(request):
+#     query = request.GET.get('q')
+#     songs = Song.objects.filter(title__icontains=query) if query else Song.objects.all()
+
+#     return render(request, 'templates/search.html', {'songs': songs, 'query': query})
     
 
-#profile
 
-# def profile(request, pk):
-#     artist_id = pk
 
-#     url = "https://spotify-scraper.p.rapidapi.com/v1/artist/overview"
+    # if request.method == 'POST':
+    #     search_query = request.POST['search_query']
 
-#     querystring = {"artistId": artist_id}
+    #     url = "https://spotify-scraper.p.rapidapi.com/v1/search"
 
-#     headers = {
-#         "X-RapidAPI-Key": "02912db996msh068b089c778126bp13a9d9jsn380afeb7d573",
-#         "X-RapidAPI-Host": "spotify-scraper.p.rapidapi.com"
-#     }
+    #     querystring = {"term":search_query,"type":"track"}
 
-    # response = requests.get(url, headers=headers, params=querystring)
-
-    # if response.status_code == 200:
-    #     data = response.json()
-
-    #     name = data["name"]
-    #     monthly_listeners = data["stats"]["monthlyListeners"]
-    #     header_url = data["visuals"]["header"][0]["url"]
-
-    #     top_tracks = []
-
-    #     for track in data["discography"]["topTracks"]:
-    #         trackid = str(track["id"])
-    #         trackname = str(track["name"])
-    #         if get_track_image(trackid, trackname):
-    #             trackimage = get_track_image(trackid, trackname)
-    #         else:
-    #             trackimage = "https://imgv3.fotor.com/images/blog-richtext-image/music-of-the-spheres-album-cover.jpg"
-
-    #         track_info = {
-    #             "id": track["id"],
-    #             "name": track["name"],
-    #             "durationText": track["durationText"],
-    #             "playCount": track["playCount"],
-    #             "track_image": trackimage
-    #         }
-
-    #         top_tracks.append(track_info)
-
-    #     artist_data = {
-    #         "name": name,
-    #         "monthlyListeners": monthly_listeners,
-    #         "headerUrl": header_url,
-    #         "topTracks": top_tracks,
+    #     headers = {
+    #         "X-RapidAPI-Key": "02912db996msh068b089c778126bp13a9d9jsn380afeb7d573",
+    #         "X-RapidAPI-Host": "spotify-scraper.p.rapidapi.com"
     #     }
+
+    #     response = requests.get(url, headers=headers, params=querystring)
+
+    #     track_list = []
+
+    #     if response.status_code == 200:
+    #         data = response.json()
+
+    #         search_results_count = data["tracks"]["totalCount"]
+    #         tracks = data["tracks"]["items"]
+
+    #         for track in tracks:
+    #             track_name = track["name"]
+    #             artist_name = track["artists"][0]["name"]
+    #             duration = track["durationText"]
+    #             trackid = track["id"]
+
+    #             if get_track_image(trackid, track_name):
+    #                 track_image = get_track_image(trackid, track_name)
+    #             else:
+    #                 track_image = "https://imgv3.fotor.com/images/blog-richtext-image/music-of-the-spheres-album-cover.jpg"
+
+    #             track_list.append({
+    #                 'track_name': track_name,
+    #                 'artist_name': artist_name,
+    #                 'duration': duration,
+    #                 'trackid': trackid,
+    #                 'track_image': track_image,
+    #             })
+    #     context = {
+    #         'search_results_count': search_results_count,
+    #         'track_list': track_list,
+    #     }
+
+    #     return render(request, 'search.html', context)
     # else:
-    #     artist_data = {}
-    # return render(request, 'profile.html', artist_data)
+    #     return render(request, 'search.html')
     
+
+
 
 
 
@@ -372,11 +359,10 @@ def logout(request):
 
 
 
-# from django.shortcuts import render, get_object_or_404
-# from .models import Song, Artist
 
-def music_player(request):
-    artist_id = request.GET.get('artist', '')  # Get artist ID from URL parameter
+
+def music_player(request,artist_id):
+    # artist_id = request.GET.get('artist',   # Get artist ID from URL parameter
 
     if artist_id:
         songs = Song.objects.filter(artist_id=artist_id)  # Filter songs by artist ID
@@ -405,7 +391,7 @@ def Topsong_list(request, topsong_id):
 
 
 
-def tune_album(request):
+def tune_album(request,topsong_id):
     topsong_id = request.GET.get('topsong', '')  # Get artist ID from URL parameter
 
     if topsong_id:
@@ -418,6 +404,38 @@ def tune_album(request):
     return render(request, 'album.html', {'tunes': tunes, 'topsong': topsong, 'selected_topsong': topsong_id})
 
 
+ #whislist
+
+
+ 
+
+@login_required
+def add_to_wishlist(request, artist_id):
+    song = get_object_or_404(Song, id=artist_id)
+    Wishlist.objects.get_or_create(user=request.user, song=song)
+    return redirect(reverse('music_player', args=[artist_id])) # Change to your desired redirect page
+
+
+@login_required
+def wishlist_view(request):
+    wishlist = Wishlist.objects.filter(user=request.user)
+    return render(request, 'wishlist.html', {'wishlist': wishlist})
+
+
+
+
+# def artist_list(request):
+#     # Example logic for displaying artists
+#     artists = Artist.objects.all()
+#     return render(request, 'player.html', {'artists': artists})
+
+
+ # Assuming this is your model
+
+def remove_from_wishlist(request, item_id):
+    item = get_object_or_404(Wishlist, id=item_id)
+    item.delete()
+    return redirect('wishlist_page')  # Update this to match your wishlist page URL name
 
 
 
@@ -425,36 +443,3 @@ def tune_album(request):
 
 
 
-# @login_required
-# def wishlist(request):
-#     """Show user's wishlist"""
-#     wishlist_songs = Wishlist.objects.filter(user=request.user)
-#     return render(request, 'wishlist.html', {'wishlist_songs': wishlist_songs})
-
-# @login_required
-# def add_to_wishlist(request, song_id):
-#     """Add a song to wishlist"""
-#     song = get_object_or_404(Song, id=song_id)
-#     Wishlist.objects.get_or_create(user=request.user, song=song)
-#     return redirect('wishlist')
-
-# @login_required
-# def remove_from_wishlist(request, song_id):
-#     """Remove a song from wishlist"""
-#     song = get_object_or_404(Song, id=song_id)
-#     Wishlist.objects.filter(user=request.user, song=song).delete()
-#     return redirect('wishlist')
-
-    
-
-
-
-
-
-
-
-
-
-
-
-# # Create your views here.
