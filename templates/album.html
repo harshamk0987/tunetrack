@@ -4,9 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'album_style.css' %}" />
     <title>Music Streaming</title>  
-    <style>
-        body {
+   
+</head>
+     <body class="bg-black text-white flex">
+  
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Spotify Logo -->
+    <div class="logo-container">
+        <img src="{% static 'images/tunetrack.png'  %}" alt="Spotify Logo" style="width: 100%; height: auto; padding: 20px; box-sizing: border-box;">
+    </div>
+    <!--welcome user-->
+    <div class="sidebar-section">
+      <span style="margin-left: 14px;" class=""sidebar-link-icon>👤</span>
+      <b>Welcome, {{user.username}}</b>
+      <br>
+      <br>
+      
+      <a href="/logout">
+        <span class="sidebar-link-icon">↪️</span>
+        <b>Logout</b>
+
+      </a>
+    </div>
+
+
+
+   <!---Top section of the sidebar -->
+    <div class="sidebar-section">
+        <a href="/home" class="sidebar-link ">
+            <span class="sidebar-link-icon">🏠</span>
+          <b> Home </b>
+        </a>
+        <a href="#" class="sidebar-link active" >
+            <span class="sidebar-link-icon">🔍</span>
+            Search
+        </a>
+        <a href="#" class="sidebar-link">
+            <span class="sidebar-link-icon">🎵</span>
+           <b>Your Library</b>
+        </a>
+    </div>
+
+    <!-- Bottom section of the sidebar -->
+    <div class="sidebar-section">
+        <a href="/wishlist" class="sidebar-link ">
+            <span class="sidebar-link-icon">💜</span>
+            <span class="sidebar-link-text"></span>
+            <b>Wishlist</b>
+        </a>
+        
+        </a>
+        <!-- ... more links ... -->
+    </div>
+</div>
+<style>
+
+
+
+         body {
             margin: 0;
             padding: 0;
             background: #121212;
@@ -57,7 +115,7 @@
        font-size: 14px;
        margin: 2px 0;
     }
-
+ 
 
 
 
@@ -93,12 +151,11 @@
 
 .cover-image:hover {
     transform: scale(1.05); /* Slight zoom on hover */
-}
+} 
+</style>
 
 
 
-    </style>
-</head>
 <body>
     <div class="container">
       
@@ -117,7 +174,6 @@
 
                 {% endif %}
                 <div class="song-details">
-                <!-- <h2 style="color:forestgreen; font-family: Arial, sans-serif; margin-bottom: 10px;"> -->
                 <h2>{{ tune.title }} - {{ tune.topsong.name }}</h2>
                 <p>Genre: {{ tune.genre|default:"Unknown" }}</p>
                 <p>Duration: {% if tune.duration %}{{ tune.duration }} sec{% else %}N/A{% endif %}</p>
@@ -129,5 +185,7 @@
             </div>
         {% endfor %}
     </div>
+</div>
 </body>
-</html> 
+</html>
+          

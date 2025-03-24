@@ -7,252 +7,128 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'wishlist_style.css' %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music App</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            display: flex;
-            margin: 0;
-            height: 100vh;
+  
        
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding-top: 20px;
-        }
-        .songs-container {
-            display: grid;
-            grid-gap: 20px;
-        }
-        .audio-container {
-            background-color: #181818;
-            border: 1px solid #282828;
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-        .audio-container:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
-        }
-        h1 {
-            color: #1DB954;
-            text-align: center;
-        }
-        h2 {
-            color: #1DB954;
-            font-size: 18px;
-            margin: 0;
-        }
-        p {
-            color: #B3B3B3;
-            font-size: 14px;
-            margin: 2px 0;
-        }
-        .cover-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 18px;
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-        }
-        .cover-image:hover {
-            transform: scale(1.05);
-        }
-        .song-details {
-            flex-grow: 1;
-        }
-        form button {
-            background-color: #1DB954;
-            border: none;
-            border-radius: 20px;
-            padding: 5px 15px;
-            color: #121212;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        form button:hover {
-            background-color: #1ed760;
-        }
-
-        .song-details {
-            flex-grow: 1;
-        }
-        form button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: #1DB954;
-            transition: color 0.3s ease;
-        }
-      
-        
-        .heart-button::before {
-            content: '\2665'; /* Unicode heart shape */
-            color: #1DB954;
-        }
-        .heart-button:hover::before {
-            color: #1ed760;
-        }
-    
-        .sidebar {
-            width: 250px;
-            background-color: #121212;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            padding: 10px 0;
-        }
-        .sidebar a.active {
-            color: #1DB954;
-        }
-        .logo-container img {
-            width: 100%;
-            padding: 20px 0;
-        }
-        .sidebar-section {
-            margin-top: 20px;
-        }
-        .sidebar-link-icon {
-            margin-right: 10px;
-        }
-    </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Spotify Logo -->
-        <div class="logo-container">
-            <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_RGB_Green.png" alt="Spotify Logo">
-        </div>
 
-        <!-- Welcome User -->
-        <div class="sidebar-section">
-            <span class="sidebar-link-icon">👋</span>
-            <b>Welcome, {{ user.username }}</b>
-            <br><br>
-            <a href="/logout">
-                <span class="sidebar-link-icon">↪️</span>
-                Logout
-            </a>
-        </div>
+        <!-- Sidebar -->
+        <div class="sidebar"> 
+            <!-- Spotify Logo -->
+             <div class="logo-container">
+                <img src="{% static 'images/tunetrack.png'  %}" alt="Spotify Logo"class="w-30 h-40">
+            </div> 
 
+    
 
-        <div class="sidebar-section">
-            <a href="/home" class="sidebar-link">
-                <span class="sidebar-link-icon">🏠</span>
-                Home
-            </a>
-            <a href="/search" class="sidebar-link">
-                <span class="sidebar-link-icon">🔍</span>
-                Search
-            </a>
-            <a href="/wishlist" class="sidebar-link">
-                <span class="sidebar-link-icon">🎵</span>
-               Wishlist
-            </a>
-        </div></div>
-       
+    <!-- Welcome User -->
+     <div class="sidebar-section">
+        <span class="sidebar-link-icon">👋</span>
+        <b>Welcome, {{ user.username }}</b>
+        <br><br>
+        <a href="/logout">
+            <span class="sidebar-link-icon">↪️</span>
+          <b> Logout</b>
+        </a>
+    </div> 
 
 
+    <div class="sidebar-section">
+        <a href="/home" class="sidebar-link">
+            <span class="sidebar-link-icon">🏠</span>
+          <b> Home</b>
+        </a>
+        <a href="/search" class="sidebar-link">
+            <span class="sidebar-link-icon">🔍</span>
+           <b> Search</b>
+        </a>
+        <a href="/wishlist" class="sidebar-link active">
+            <span class="sidebar-link-icon">💚</span>
+          <b> Wishlist</b>
+        </a>
+    </div></div>
 
-        <div class="content" style="
-    padding: 20px; 
-    background-color: #121212; 
-    color: #fff; 
-    border-radius: 12px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); 
-    max-width: 600px; 
-    margin: 40px auto;
-    font-family: Arial, sans-serif;
+   
+
+
+
+<div class="content" style="
+padding: 30px;
+background-color: #181818;
+color: #fff;
+border-radius: 20px;
+box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+max-width: 700px;
+margin: 50px auto;
+font-family: 'Poppins', sans-serif;
 ">
 
-    <h2 style="
-        text-align: center; 
-        font-size: 28px; 
-        margin-bottom: 20px; 
-        border-bottom: 2px solid #1DB954; 
-        padding-bottom: 10px;
-    ">
-        Your Wishlist
-    </h2>
+<h2 style="
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #1DB954;
+    padding-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+">
+    Your Wishlist
+</h2>
 
-    <ul style="list-style: none; padding: 0;">
-        {% for item in wishlist %}
-            <li style="
-                display: flex; 
-                align-items: center; 
-                gap: 15px; 
-                padding: 10px 0; 
-                border-bottom: 1px solid #333;
-            ">
-                <a href="{{ item.song.audio_url }}" style="flex-shrink: 0;">
-                    <img src="{{ item.song.cover_image.url }}" alt="Cover Image" style="
-                        width: 60px; 
-                        height: 60px; 
-                        border-radius: 8px; 
-                        object-fit: cover; 
-                        transition: transform 0.2s ease-in-out;
+<ul style="list-style: none; padding: 0;">
+    {% for item in wishlist %}
+        <li style="
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #282828;
+            transition: background 0.3s ease-in-out;
+        "
+        onmouseover="this.style.background='#222'"
+        onmouseout="this.style.background='transparent'">
+            <a href="{{ item.song.audio_url }}" style="flex-shrink: 0;">
+                <img src="{{ item.song.cover_image.url }}" alt="Cover Image" style="
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 10px;
+                    object-fit: cover;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+                    transition: transform 0.3s ease-in-out;
+                " 
+                onmouseover="this.style.transform='scale(1.15)'"
+                onmouseout="this.style.transform='scale(1)';">
+            </a>
+
+            <div style="flex-grow: 1;">
+                <p style="margin: 0; font-weight: bold; font-size: 18px;">{{ item.song.title }}</p>
+                <form action="{% url 'remove_from_wishlist' item.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                        background: #E63946;
+                        color: #fff;
+                        border: none;
+                        padding: 3px 5px;
+                        border-radius: 25px;
+                        cursor: pointer;
+                        transition: background 0.3s ease, transform 0.2s ease;
+                        float:right;
+                        
                     " 
-                    onmouseover="this.style.transform='scale(1.1)'"
-                    onmouseout="this.style.transform='scale(1)'">
-                </a>
-
-                <div style="flex-grow: 1;">
-                    <p style="margin: 0; font-weight: bold;">{{ item.song.title }}</p>
-                    <form action="{% url 'remove_from_wishlist' item.id %}" method="POST" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" style="
-                            background: #E63946; 
-                            color: #fff; 
-                            border: none; 
-                            padding: 5px 10px; 
-                            border-radius: 6px; 
-                            cursor: pointer;
-                            transition: background 0.3s ease;
-                        " 
-                        onmouseover="this.style.background='#D62828'"
-                        onmouseout="this.style.background='#E63946'">
-                            Remove
-                        </button>
-                    </form>
-                </div>
-            </li>
-        {% empty %}
-            <p style="text-align: center; color: #aaa;">No songs in your wishlist yet.</p>
-        {% endfor %}
-    </ul>
+                    onmouseover="this.style.background='#D62828'; this.style.transform='scale(1.1)'"
+                    onmouseout="this.style.background='#E63946'; this.style.transform='scale(1)'">
+                        Remove
+                    </button>
+                </form>
+            </div>
+        </li>
+    {% empty %}
+        <p style="text-align: center; color: #aaa; font-size: 18px;">No songs in your wishlist yet.</p>
+    {% endfor %}
+</ul>
 </div>
-
-        <!-- Top section of the sidebar -->
-      
-    <!-- Main Content Area -->
-    <!-- <div class="content" style="padding: 20px;">
-        <h2>Your Wishlist</h2>
-        <ul>
-            {% for item in wishlist %}
-                <li>
-                    <a href="{{item.song.audio_url}}"><img src="{{item.song.cover_image.url}}"></a>
-                    </li>
-            {% empty %}
-                <p>No songs in your wishlist yet.</p>
-            {% endfor %}
-        </ul> -->
-    </div>
-
-</body>
-</html>
+</body></head></html>
