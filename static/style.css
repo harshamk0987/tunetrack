@@ -268,8 +268,8 @@ align-items: center;
 justify-content: space-between;
 background-color: #2a2a2a;
 border-radius: 20px;
-padding: 10px;
-margin: 0 0px;
+padding: 10px 15px;
+margin: 20 0px;
 }
 
 .search-bar input[type="search"] {
@@ -543,4 +543,52 @@ audio {
     height: 300px;
     border-radius: 50%; /* Makes it a perfect circle */
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); /* Adds depth */
+}
+
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+    .search-bar {
+        width: 300px;
+    }
+    .artist-card img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 150px;
+    }
+    .search-bar {
+        width: 250px;
+    }
+    .artist-card img {
+        width: 100px;
+        height: 100px;
+    }
+    .browse-all {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        display: none;
+    }
+    .search-bar {
+        width: 100%;
+    }
+    .artist-card img {
+        width: 80px;
+        height: 80px;
+    }
+    .category-card img {
+        width: 100%;
+        height: auto;
+    }
 }

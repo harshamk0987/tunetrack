@@ -14,8 +14,10 @@ from .models import Tune,Topsong
 from .forms import SongSearchForm
 from .models import Wishlist
 from django.urls import reverse
-
+from django.http import JsonResponse
 from django.conf import settings
+
+
 
 
 
@@ -38,22 +40,22 @@ def index(request):
     # track_id = 4
     return render(request, 'templates/index.html',{'songs':songs,'artist_id': artist_id})
 
-    
+
+
+
+def player_search(request, artist_id):
+    query = request.GET.get('q', '')
+    songs = Song.objects.filter(title__icontains=query, artist_id=artist_id)
+    return render(request, "player_search.html", {"songs": songs})
 def search_songs(request):
-    form = SongSearchForm(request.GET)
-    results = []
+    query = request.GET.get('query', '')
+    songs = Song.objects.filter(title__icontains=query) if query else None
 
-    if form.is_valid():
-        query = form.cleaned_data['query']
-
-        results = Song.objects.filter(
-            title__icontains=query
-        ) | Song.objects.filter(
-            artist__name__icontains=query  # Correct lookup for ForeignKey
-        )
-
-
-    return render(request, 'search.html', {'form': form, 'results': results})
+    context = {
+        'songs': songs,  # ✅ Make sure 'songs' is passed
+        'artist_id': request.GET.get('artist_id', ''),  # ✅ Ensure 'artist_id' is available
+    }
+    return render(request, 'search.html', context)
 
 
 
@@ -165,10 +167,14 @@ def tune_album(request,topsong_id):
  
 
 @login_required
-def add_to_wishlist(request, artist_id):
-    song = get_object_or_404(Song, id=artist_id)
+def add_to_wishlist(request, song_id):
+    song = get_object_or_404(Song, id=song_id)
     Wishlist.objects.get_or_create(user=request.user, song=song)
-    return redirect(reverse('music_player', args=[artist_id])) # Change to your desired redirect page
+
+    # return JsonResponse({'message': 'Song added to wishlist', 'audio_url': song.audio_url.url})
+    return redirect('wishlist_page')
+
+
 
 
 @login_required
@@ -179,13 +185,7 @@ def wishlist_page(request):
 
 
 
-# def artist_list(request):
-#     # Example logic for displaying artists
-#     artists = Artist.objects.all()
-#     return render(request, 'player.html', {'artists': artists})
 
-
- # Assuming this is your model
 
 def remove_from_wishlist(request, item_id):
     item = get_object_or_404(Wishlist, id=item_id)
@@ -193,8 +193,18 @@ def remove_from_wishlist(request, item_id):
     return redirect(reverse('wishlist_page'))  # Update this to match your wishlist page URL name
 
 
-def profile(request):
-    return render(request, 'profile.html') 
+
+
+
+
+
+    
+   
+
+
+
+
+
 
 
 

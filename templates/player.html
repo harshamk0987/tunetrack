@@ -32,7 +32,7 @@
         <span style="margin-left: 14px;" class=""sidebar-link-icon>👤</span>
         <b>Welcome, {{user.username}}</b>
         <br>
-        <br>
+       
         
         <a href="/logout">
           <span class="sidebar-link-icon">↪️</span>
@@ -49,15 +49,14 @@
               <span class="sidebar-link-icon">🏠</span>
             <b> Home </b>
           </a>
-          <a href="#" class="sidebar-link active" >
+          <!-- <a href="search/" class="sidebar-link " >
               <span class="sidebar-link-icon">🔍</span>
               Search
-          </a>
+          </a> -->
           <a href="#" class="sidebar-link">
               <span class="sidebar-link-icon">🎵</span>
              <b>Your Library</b>
           </a>
-      </div>
   
       <!-- Bottom section of the sidebar -->
       <div class="sidebar-section">
@@ -66,9 +65,14 @@
               <span class="sidebar-link-text"></span>
               <b>Wishlist</b>
           </a>
-          
+      </div>      
+      <div class="sidebar-section">
+        <a href="/artist" class="sidebar-link active ">
+            <span class="sidebar-link-icon">💜</span>
+            <span class="sidebar-link-text"></span>
+            <b>Listen music..</b>
           </a>
-          <!-- ... more links ... -->
+      </div>
       </div>
   </div>
     <title>TuneTrack</title>

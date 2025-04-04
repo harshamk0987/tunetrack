@@ -56,79 +56,106 @@
 
 
 
-<div class="content" style="
-padding: 30px;
-background-color: #181818;
-color: #fff;
-border-radius: 20px;
-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
-max-width: 700px;
-margin: 50px auto;
-font-family: 'Poppins', sans-serif;
+    <div class="content" style="
+    padding: 30px;
+    background-color: #181818;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    max-width: 700px;
+    margin: 50px auto;
+    font-family: 'Poppins', sans-serif;
 ">
+    <h2 style="
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 25px;
+        border-bottom: 3px solid #1DB954;
+        padding-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    ">
+        Your Wishlist
+    </h2>
 
-<h2 style="
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 25px;
-    border-bottom: 3px solid #1DB954;
-    padding-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-">
-    Your Wishlist
-</h2>
+    <ul style="list-style: none; padding: 0;">
+        {% for item in wishlist %}
+            <li style="
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                padding: 15px 0;
+                border-bottom: 1px solid #282828;
+                transition: background 0.3s ease-in-out;
+            "
+            onmouseover="this.style.background='#222'"
+            onmouseout="this.style.background='transparent'">
 
-<ul style="list-style: none; padding: 0;">
-    {% for item in wishlist %}
-        <li style="
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 15px 0;
-            border-bottom: 1px solid #282828;
-            transition: background 0.3s ease-in-out;
-        "
-        onmouseover="this.style.background='#222'"
-        onmouseout="this.style.background='transparent'">
-            <a href="{{ item.song.audio_url }}" style="flex-shrink: 0;">
+                <!-- Song Cover Image (Clickable for Playing) -->
                 <img src="{{ item.song.cover_image.url }}" alt="Cover Image" style="
                     width: 70px;
                     height: 70px;
                     border-radius: 10px;
                     object-fit: cover;
+                    cursor: pointer;
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
                     transition: transform 0.3s ease-in-out;
                 " 
+                onclick="playWishlistSong('{{ item.song.audio_file.url }}')"
                 onmouseover="this.style.transform='scale(1.15)'"
                 onmouseout="this.style.transform='scale(1)';">
-            </a>
 
-            <div style="flex-grow: 1;">
-                <p style="margin: 0; font-weight: bold; font-size: 18px;">{{ item.song.title }}</p>
-                <form action="{% url 'remove_from_wishlist' item.id %}" method="POST" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" style="
-                        background: #E63946;
-                        color: #fff;
-                        border: none;
-                        padding: 3px 5px;
-                        border-radius: 25px;
-                        cursor: pointer;
-                        transition: background 0.3s ease, transform 0.2s ease;
-                        float:right;
-                        
-                    " 
-                    onmouseover="this.style.background='#D62828'; this.style.transform='scale(1.1)'"
-                    onmouseout="this.style.background='#E63946'; this.style.transform='scale(1)'">
-                        Remove
-                    </button>
-                </form>
-            </div>
-        </li>
-    {% empty %}
-        <p style="text-align: center; color: #aaa; font-size: 18px;">No songs in your wishlist yet.</p>
-    {% endfor %}
-</ul>
+                <div style="flex-grow: 1;">
+                    <p style="margin: 0; font-weight: bold; font-size: 18px;">{{ item.song.title }}</p>
+
+                    <!-- Audio Player -->
+                    <audio controls>
+                        <source src="{{ item.song.audio_url.url }}" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+
+                    <!-- Remove Button -->
+                    <form action="{% url 'remove_from_wishlist' item.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="
+                            background: #E63946;
+                            color: #fff;
+                            border: none;
+                            padding: 3px 5px;
+                            border-radius: 25px;
+                            cursor: pointer;
+                            transition: background 0.3s ease, transform 0.2s ease;
+                            float: right;
+                        " 
+                        onmouseover="this.style.background='#D62828'; this.style.transform='scale(1.1)'"
+                        onmouseout="this.style.background='#E63946'; this.style.transform='scale(1)'">
+                            Remove
+                        </button>
+                    </form>
+                </div>
+            </li>
+        {% empty %}
+            <p style="text-align: center; color: #aaa; font-size: 18px;">No songs in your wishlist yet.</p>
+        {% endfor %}
+    </ul>
 </div>
+
+<!-- JavaScript to Play Audio -->
+<script>
+function playWishlistSong(audioUrl) {
+    var audioPlayer = document.createElement("audio");
+    audioPlayer.src = audioUrl;
+    audioPlayer.controls = true;
+    audioPlayer.autoplay = true;
+
+    // Remove any existing players
+    var existingPlayer = document.getElementById("wishlistAudioPlayer");
+    if (existingPlayer) {
+        existingPlayer.remove();
+    }
+
+    audioPlayer.id = "wishlistAudioPlayer";
+    document.body.appendChild(audioPlayer);
+}
+</script>
 </body></head></html>

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
  # Assuming this is your model
 
 
@@ -76,6 +77,25 @@ class Wishlist(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.song.title}"
     
+
+
+
+   
+
+# class Artist(models.Model):
+#     name = models.CharField(max_length=200)
+#     image = models.URLField()  # Artist's image URL
+#     verified = models.BooleanField(default=True)
+#     monthly_listeners = models.IntegerField()
+#     slug = models.SlugField(unique=True, blank=True)  # Unique identifier for URLs
+
+#     def save(self, *args, **kwargs):
+#         if not self.slug:
+#             self.slug = slugify(self.name)  # Auto-generate slug from name
+#         super().save(*args, **kwargs)
+
+#     def __str__(self):
+#         return self.name
 
 
 

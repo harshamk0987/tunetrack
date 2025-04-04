@@ -8,111 +8,54 @@
   <title>Artist Profile</title>
   <link rel="stylesheet" type="text/css" href="{% static 'search-style.css' %}" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.4/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-
-    /* .artist-header {
-      background-image: url('https://cdn.punchng.com/wp-content/uploads/2023/05/20120536/Rema.jpeg');
-      background-size: cover;
-      background-position: center;
-      height: 60vh;
-    } */
-
-  </style>
 </head>
 <body class="bg-black text-white flex">
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Spotify Logo -->
+    <!-- Logo -->
     <div class="logo-container">
-        <img src="{% static 'images/tunetrack.png'  %}" alt="Spotify Logo" style="width: 100%; height: auto; padding: 20px; box-sizing: border-box;">
+        <img src="{% static 'images/tunetrack.png' %}" alt="Spotify Logo" style="width: 100%; padding: 20px;">
     </div>
-    <!--welcome user-->
+    
+    <!-- Welcome User -->
     <div class="sidebar-section">
-      <span style="margin-left: 14px;" class=""sidebar-link-icon>👤</span>
-      <b>Welcome, {{user.username}}</b>
-      <br>
-      <br>
-      
-      <a href="/logout">
+      <span style="margin-left: 14px;" class="sidebar-link-icon">👤</span>
+      <b>Welcome, {{ user.username }}</b>
+      <br><br>
+      <a href="{% url 'logout' %}">
         <span class="sidebar-link-icon">↪️</span>
         <b>Logout</b>
-
       </a>
     </div>
 
-
-
-   <!---Top section of the sidebar -->
+    <!-- Navigation Links -->
     <div class="sidebar-section">
-        <a href="/home" class="sidebar-link ">
-            <span class="sidebar-link-icon">🏠</span>
-          <b> Home </b>
+        <a href="{% url 'home' %}" class="sidebar-link">
+            <span class="sidebar-link-icon">🏠</span> <b>Home</b>
         </a>
-        <a href="#" class="sidebar-link active" >
-            <span class="sidebar-link-icon">🔍</span>
-            Search
+        <a href="#" class="sidebar-link active">
+            <span class="sidebar-link-icon">🔍</span> Search
         </a>
         <a href="#" class="sidebar-link">
-            <span class="sidebar-link-icon">🎵</span>
-           <b>Your Library</b>
+            <span class="sidebar-link-icon">🎵</span> <b>Your Library</b>
+        </a>
+        <a href="{% url 'wishlist_page' %}" class="sidebar-link">
+            <span class="sidebar-link-icon">💜</span> <b>Wishlist</b>
         </a>
     </div>
-
-    <!-- Bottom section of the sidebar -->
-    <div class="sidebar-section">
-        <a href="/wishlist" class="sidebar-link ">
-            <span class="sidebar-link-icon">💜</span>
-            <span class="sidebar-link-text"></span>
-            <b>Wishlist</b>
-        </a>
-        
-        </a>
-        <!-- ... more links ... -->
-    </div>
-</div>
-
-
-
+  </div>
 
   <!-- Main Content -->
-  <!-- <div class="flex-1">
-      
-    <br>
-    <br>
-    <header class="header-container">
-      <div class="search-bar" style="width: 390px;">
-          <input type="search" placeholder="What do you want to listen?" aria-label="Search">
-          <button type="submit" aria-label="Search">
-              🔍 -->
-          <!-- </button>
-         
-    
-        {% if results %}
-            <h2>Results:</h2>
-            <ul>
-                {% for song in results %}
-                    <li>{{ song.title }} by {{ song.artist }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No results found.</p>
-        {% endif %}
-    </body>
-    </html>
-    
-    
-      </div> 
-    </header> -->
-
-
-
-    <div class="flex-1">
+  <div class="flex-1">
       <br><br>
-      
       <header class="header-container">
           <div class="search-bar" style="width: 300px;">
-              <form method="GET" action="{% url 'search_songs' %}">
+              {% if artist_id %}
+                  <form action="{% url 'music_player' artist_id %}" method="GET">
+              {% else %}
+                  <form action="{% url 'search_songs' %}" method="GET">
+              {% endif %}
                   <input 
                       type="search" 
                       name="query"
@@ -120,100 +63,61 @@
                       aria-label="Search"
                       style="width: 100%; padding: 8px; border-radius: 20px; border: 1px solid #ccc;"
                   >
-                  <button 
-                      type="submit" 
-                      aria-label="Search"
-                      style="padding: 8px 15px;  color: #fff; border: none; border-radius: 20px; cursor: pointer;" 
-                  >
+                  <button type="submit" style="padding: 8px 15px; color: #fff; border: none; border-radius: 20px; cursor: pointer;">
                       🔍
                   </button>
               </form>
-  
-              
           </div>
+
           <div>
             {% if results %}
-                  <h2>Results:</h2>
-                  <ul style="list-style-type: none; padding: 0;">
-                      {% for song in results %}
-                          <li style="padding: 2px 0;">
-                              🎵 <strong>{{ song.title }}</strong> by {{ song.artist }}
-                          </li>
-                      {% endfor %}
-                  </ul>
-              {% else %}
-                  <!-- <p>No results found.</p> -->
-              {% endif %}
+  <ul class="mt-4 space-y-2">
+    {% for song in results %}
+      <li class="px-4 py-2 rounded-lg bg-gray-100 shadow-sm hover:bg-gray-200 transition">
+        🎵 <span class="font-semibold text-gray-800">{{ song.title }}</span> 
+        <span class="text-gray-600">by {{ song.artist }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-gray-500 italic mt-4">No results found.</p>
+{% endif %}
+              
           </div>
       </header>
   </div>
-  
+
+  <!-- Songs List -->
+  <div class="min-h-screen flex items-center justify-center bg-black-100 py-10  px-4">
+    <div class="w-full max-w-6xl ">
+  {% for song in songs %}
+  <div class="flex justify-end mb-6">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 p-5 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-2xl">
 
 
-    
-    <!-- <title>Song Search</title> -->
+  <!-- <div class="flex flex-col  items-center gap-6 p-5 mb-6 rounded-2xl  shadow-lg hover:shadow-x1 transition-shadow duration-300 "> -->
+    <!-- <div class="w-28 h-28 flex-shrink-0 overflow-hidden rounded-2xl shadow-md"> -->
+        <div class="w-full md:w-28 h-52 md:h-28 flex-shrink-0 overflow-hidden rounded-2xl shadow-md">
+        <img src="{{ song.cover_image.url }}" alt="Cover Image" class="w-ful h-full object-cover" /></div>
+       
+    <!-- <div style="flex-grow: 1;"> -->
+        <div class="flex flex-col flex-grow w-full">
+        <!-- <p style="margin: 0; font-weight: bold; font-size: 18px;"> -->
+            <p class="text-lg md:text-xl font-semibold text-gray-900">{{ song.title }}</p>
+            <p class="text-sm text-gray-600  mb-2 md:mb-4">by {{ song.artist.name }}</p>
 
-
-    <!-- <h1>Search for Songs</h1> -->
-
-    
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-    <!-- <div class="p-5">
-      <br>
-      <h2 class="text-2xl font-bold mb-4">Search Results</h2>
-      <div class="divide-y divide-gray-800"> --> 
-
-
-
-         <!-- <form method="GET" action="{% url 'search_songs' %}">
-          <input type="text" name="q" placeholder="Search for a song..." required>
-          <button type="submit">Search</button>
-      </form> 
-        Single Track Row 
-          {% for track in track_list %}  -->
-        <!-- <div class="flex justify-between items-center py-3">
-          <div class="flex items-center space-x-4">
-            <img src="https://i.scdn.co/image/ab67616d00001e02963265801aa5c9740ad159b7" alt="Song Image" class="w-12 h-12">
-            <div>
-              <p class="text-base font-medium">Calm Down</p>
-              <p class="text-xs text-gray-400">Rema, Selena Gomez</p>
-            </div>
-          </div>
-          <div class="text-gray-400">1,182,474,314</div> --> -->
-          <!-- <div class="text-gray-400">3:59</div>
+           
+          <audio controls class=" w-full rounded-lg border border-gray-300 shadow-inner bg-gray-100">
+              <source src="{{ song.audio_url.url }}" type="audio/mp3">
+              Your browser does not support the audio element.
+          </audio>
         </div>
-        <!-- Repeat for other tracks -->
       </div>
-      <a href="#" class="text-green-500 text-sm">See more</a>
-    </div>
-    {% endfor %}
-    
   </div>
+  </div>
+
+      
+  {% endfor %}
 
 </body>
 </html>
