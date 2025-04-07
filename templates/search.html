@@ -70,18 +70,18 @@
           </div>
 
           <div>
-            {% if results %}
-  <ul class="mt-4 space-y-2">
-    {% for song in results %}
-      <li class="px-4 py-2 rounded-lg bg-gray-100 shadow-sm hover:bg-gray-200 transition">
-        🎵 <span class="font-semibold text-gray-800">{{ song.title }}</span> 
-        <span class="text-gray-600">by {{ song.artist }}</span>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p class="text-gray-500 italic mt-4">No results found.</p>
-{% endif %}
+            {% if songs %}
+              <ul class="mt-4 space-y-2">
+                {% for song in results %}
+                  <li class="px-4 py-2 rounded-lg bg-gray-100 shadow-sm hover:bg-gray-200 transition">
+                    🎵 <span class="font-semibold text-gray-800">{{ song.title }}</span> 
+                    <span class="text-gray-600">by {{ song.artist }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+              {% else %}
+                <p class="text-gray-500 italic mt-4">No results found.</p>
+              {% endif %}
               
           </div>
       </header>
